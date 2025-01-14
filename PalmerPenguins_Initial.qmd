@@ -1,0 +1,25 @@
+---
+title: "Palmer Penguins Initial Analysis"
+author: "Cesia Mendez"
+format: html
+editor: visual
+execute:
+  keep-md: true
+---
+
+## Palmer Penguins 
+
+The Palmer Penguins data set is one of the most common resources for data analysis and visualization with complex observations from three species: Adélie, Chinstrap, and Gentoo. The penguins live on different islands in the Palmer Archipelago near Antarctica. In this data set, there is information about the species, island location, bill length and depth, flipper length, body mass, and sex. Therefore, it is also an easy, ecologically more relevant analog of the classical Iris data set and a real example to conduct statistical analyses, machine learning, and data visualization in R and Python. It is highly accessible to researchers and instructors for teaching applied explorations in biological data.
+
+```{r}
+#Load the tidyverse
+library(tidyverse)
+
+#Read the penguins_samp1 data file from github
+penguins <- read_csv("https://raw.githubusercontent.com/mcduryea/Intro-to-Bioinformatics/main/data/penguins_samp1.csv")
+
+#See the first six rows of the data we've read in to our notebook
+penguins %>% head()
+```
+
+The data set is represented in a table of six rows and eight columns of measurements of Gentoo penguins from Biscoe Island across different years. The variables include species, island, and numeric measurements such as bill length (in mm), bill depth (in mm), flipper length (in mm), and body mass in grams. The data set also provides the sex of the penguins, listed as all males, and the year of observation, which runs from 2007 to 2009. The measurements of penguins have consistent flipper lengths at approximately 230 mm, with small variations in bill dimensions and body mass, indicating uniformity in the sample population's physical characteristics.
