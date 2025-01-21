@@ -440,7 +440,7 @@ Bill depth differs among species; the mean bill depth was largest for the Chinst
 
 In this section of the analysis, we aim to learn how to code with ggplot() to create data visualization for categorical and numerical variables.
 
-## One categorical variable is visualized with a bar plot. 
+## One categorical variable is visualized with a bar plot.
 
 
 
@@ -486,7 +486,7 @@ penguins %>%
 
 This plot shows the distribution of penguins across the different islands in the data set. The x-axis represents the islands, while the y-axis represents how many penguins come from each island. According to the plot, Biscoe Island hosts the highest number of penguins, followed by Dream Island, whereas Torgersen Island has the least. From this, we understand to which island the majority of penguins in this data set belong.
 
-## One numerical variable is visualized with a histogram 
+## One numerical variable is visualized with a histogram
 
 
 
@@ -667,7 +667,7 @@ penguins %>%
 
 The histogram shows a distinct pattern with regard to the bill depth: the Adelie penguin is concentrated at about 17 mm, representing minimal variability in its bill depth, while the data for the Chinstrap penguins is quite sparse with measurements scattered from 17 to 20 mm making any analytical overview of the trend very hard. The most variable are Gentoo penguins with bill depths mostly between 14 and 17mm, peaking at about 16mm, which suggests a possible greater variability than the other species. From the following plot, there are species -specific differences in bill depth, and data for Adelie and Gentoo penguins is much more abundant than that for the Chinstrap penguins.
 
-## Advanced Plotting 
+## Advanced Plotting
 
 In this part of the analysis we aim to learn how to build more complex plots. plots.
 
@@ -797,7 +797,7 @@ Warning in max(ids, na.rm = TRUE): no non-missing arguments to max; returning
 
 This code will plot body mass against bill depth, with points differentiated by species (color) and sex (shape). It also adds a linear model trend line using (lm) for each species and facets the data by island and sex. Since facet_grid uses scales = "free", the scales will adjust independently for each facet to fit the data range.
 
-## A Final Question 
+## A Final Question
 
 
 
