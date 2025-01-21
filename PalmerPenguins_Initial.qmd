@@ -7,7 +7,7 @@ execute:
   keep-md: true
 ---
 
-## Palmer Penguins 
+## Palmer Penguins
 
 The Palmer Penguins data set is one of the most common resources for data analysis and visualization with complex observations from three species: Adélie, Chinstrap, and Gentoo. The penguins live on different islands in the Palmer Archipelago near Antarctica. In this data set, there is information about the species, island location, bill length and depth, flipper length, body mass, and sex. Therefore, it is also an easy, ecologically more relevant analog of the classical Iris data set and a real example to conduct statistical analyses, machine learning, and data visualization in R and Python. It is highly accessible to researchers and instructors for teaching applied explorations in biological data.
 
@@ -22,4 +22,305 @@ penguins <- read_csv("https://raw.githubusercontent.com/mcduryea/Intro-to-Bioinf
 penguins %>% head()
 ```
 
-The data set is represented in a table of six rows and eight columns of measurements of Gentoo penguins from Biscoe Island across different years. The variables include species, island, and numeric measurements such as bill length (in mm), bill depth (in mm), flipper length (in mm), and body mass in grams. The data set also provides the sex of the penguins, listed as all males, and the year of observation, which runs from 2007 to 2009. The measurements of penguins have consistent flipper lengths at approximately 230 mm, with small variations in bill dimensions and body mass, indicating uniformity in the sample population's physical characteristics.
+The following is a table of six rows and eight columns of measurements of Gentoo penguins from Biscoe Island across different years. The variables include species, island, and numeric measurements such as bill length, in mm, bill depth, in mm, flipper length, in mm, and body mass in grams. It contains the sex of the penguins, and they are all males; the year of observation is from 2007 to 2009. From the measures of penguins, the flipper lengths are approximately 230 mm for all, and also, bill dimension and body masses all show very close variations from one another, meaning there are no atypical records in this sample population regarding physical measurements.
+
+## Data Manipulation **and Summarization**
+
+In this section of the analysis, we aim to learn how to use R coding to manipulate data. We will be focusing on how to filter rows, subset columns, group data, and compute summary statistics.
+
+```{r}
+penguins %>%
+  count(species)
+```
+
+The result is the count of penguin species in the dataset grouped by their names: Adelie has 9 members, Chinstrap has 2, and Gentoo has 33; Gentoo is the most abundant species within the dataset. That would, therefore, mean the dataset is not well distributed among the species since there is strong representation from Gentoo penguins compared to the other two species.
+
+```{r}
+penguins %>% 
+  count(island, species)
+```
+
+The output gives a summary of the number of penguins of each species counted on different islands. The Gentoo species is most abundant and has been observed 33 times on Biscoe Island, whereas the Adelie species is represented on all three islands, with the highest number of 5 on Torgersen Island. The Chinstrap species is the least represented, with a total of only 2 observed on the Dream Island.
+
+```{r}
+penguins %>%
+  count(island, species) %>%
+  pivot_wider(names_from = species, values_from = n, values_fill = 0)
+
+```
+
+This output summarizes the data by reorganizing the counts of species per island into a wider format. The count () function counts the number of penguins for each species on each island. The privot_wider() reshapes the data. Finally, the missing values are placed with 0 using values_fill= 0 to make clear that no Gentoo or Chinstrap penguins were observed on Torgersen Island, and no Gentoo penguins were found on Dream Island.
+
+```{r}
+library("kableExtra")
+penguins %>%
+  count(island, species) %>%
+  pivot_wider(names_from = species, values_from = n, values_fill = 0) %>%
+  kable() %>%
+  kable_styling(bootstrap_options = c("hover", "striped"))
+```
+
+KableExtra will count the penguin species on each island, reshape the data so that species are columns and the count is what is shown, fill in missing values with 0, and output this as a styled table with hover and striped effects for readability. This makes it visually appealing and interpretable.
+
+```{r}
+penguins %>%
+  summarize(
+    min_bill_length = min(bill_length_mm, na.rm = TRUE),
+    first_quartile_bill_length = quantile(bill_length_mm, 0.25, na.rm = TRUE),
+    median_bill_length = median(bill_length_mm, na.rm = TRUE),
+    mean_bill_length_mm = mean(bill_length_mm, na.rm = TRUE),
+    third_quartile_bill_length = quantile(bill_length_mm, 0.75, na.rm = TRUE),
+    standard_deviation_bill_length = sd(bill_length_mm, na.rm = TRUE)
+    ) %>%
+  pivot_longer(cols = everything())
+```
+
+The code gives the minimum, first quartile, median, mean, third quartile, and standard deviation of the variable bill_length_mm in the penguin's data set, not taking into account any missing values. This summary is reshaped into a longer format using the pivot_longer command in which each statistic gets to be a separate row with its value for easier viewing or analysis.
+
+### **Selecting Specific Columns and Rows**
+
+In this section of the analysis, we aim to select specific columns or rows satisfying certain conditions (using the filter() function).
+
+```{r}
+penguins %>%
+  select(species, island, sex, year)
+```
+
+The code select (), selects the columns species, island, sex, and year from the penguin's data set. It then displays the species, island, sex, and year of each penguin observation.
+
+```{r}
+penguins %>%
+  select(species, island, sex, year) %>%
+  filter(species == "Chinstrap")
+```
+
+The code select (), selects the columns species, island, sex, and year from the penguin's data set, then the code filter(), filters the rows to have only those where the species is "Chinstrap." The resulting tibble contains 2 rows, showing the gender and year of observation for Chinstrap penguins from Dream Island in 2007 and 2009.
+
+```{r}
+chinstraps <- penguins %>%
+  select(species, island, sex, year) %>%
+  filter(species == "Chinstrap") %>%
+  select(-species)
+
+chinstraps %>%
+  head()
+```
+
+This code will create a new data frame called Chinstraps that selects the columns species, island, sex, and year from the penguin data frame, filters the rows where the species is "Chinstrap," and then drops the species column. The function head() has been used to show the first 2 rows of this modified data frame, which displays the island, sex, and year of the Chinstrap penguins.
+
+## **Grouping and Summarizing Groups**
+
+In this section of the analysis, we aim to use the codes group_by() and summarize() to compare summary statistics across groups.
+
+```{r}
+penguins %>%
+  group_by(species) %>%
+  summarise(
+    mean_bill_depth_mm = mean(bill_depth_mm, na.rm = TRUE),
+    sd_bill_depth_mm = sd(bill_depth_mm, na.rm = TRUE)
+  )
+```
+
+Bill depth differs among species; the mean bill depth was largest for the Chinstrap species, followed by Adelie and Gentoo species. Chinstrap penguins have the largest standard deviation among the three groups, indicating more variation in bill depth measurements within that group.
+
+### **Data Visualization with `ggplot()`**
+
+In this section of the analysis, we aim to learn how to code with ggplot() to create data visualization for categorical and numerical variables.
+
+## One categorical variable is visualized with a bar plot. 
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_bar(mapping = aes(x = species)) +
+  labs(title ="Counts of Penguin Species",
+       x = "Species", y = "Count")
+```
+
+This bar chart plotted by the code visualizes counts from each penguin species represented in the overall data set. In this plot, the x-axis represents the various species, and the y-axis represents the count of penguins that fall into each category of species. We can also identify visually that the Gentoo penguins have the highest count and are followed by Adelie and Chinstrap penguins, respectively. The pattern of species distribution in this data set is automatically told by a visual representation.
+
+In ggplot(), the + signs are used to add layers to the plot. Each layer becomes a different part of the plot like the type, geom_bar(), labels, labs(), and any data transformations. The + allows us, in a way, to modularly build up a plot by sequentially adding layers, which increases flexibility and readability in the code.
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_bar(mapping = aes(x = island)) +
+  labs(title = "Counts of Penguins by Island",
+       x = "Island", y = "Count")
+
+```
+
+This plot shows the distribution of penguins across the different islands in the data set. The x-axis represents the islands, while the y-axis represents how many penguins come from each island. According to the plot, Biscoe Island hosts the highest number of penguins, followed by Dream Island, whereas Torgersen Island has the least. From this, we understand to which island the majority of penguins in this data set belong.
+
+## One numerical variable is visualized with a histogram 
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_histogram(mapping = aes(x = bill_length_mm),
+                 color = "white",
+                 fill = "blue") +
+  labs(title ="Distribution of Bill Lengths",
+       x = "Bill Length (mm)", y = "Count")
+```
+
+This code visualizes the distribution in the bill length of the penguins in this data set. It is a histogram showing on the x-axis, length in millimeters, and y-axis, the frequency of the penguins in that bill length. It provides a clear picture of how the bill lengths are distributed and what length is more frequent in this particular data set.
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_density(mapping = aes(x = bill_length_mm), fill = "blue") +
+  labs(title = "Density Plot of Bill Lengths",
+       x = "Bill Length (mm)", y = "Density")
+
+```
+
+The density plot gives a better impression of the general shape of the distribution (symmetrical or asymmetrical) and results in a smooth appearance without giving too much emphasis to bin boundaries. On the other hand, The histogram is better at showing the exact frequency of bill lengths within specific ranges, making it easy to see how many penguins fall into each bin.
+
+## The relationship between two numerical variables can be explored with a scatter plot
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_point(mapping = aes(x = bill_depth_mm, y = bill_length_mm)) +
+  labs(title = "Bill Depth and Length",
+       x = "Bill Depth (mm)",
+       y = "Bill Length (mm)")
+```
+
+There is a positive relationship in the scatter plot between bill depth and bill length, as the bill length generally increases as bill depth increases, suggesting that penguins with deeper bills have longer bills. The data points spread across both axes, showing the variability of bill length for penguins of similar bill depths. While there are no clear clusters in this plot, the relationship is rather continuous; however, there could be outliers or hidden patterns in some subsets that might further be investigated to identify those unusual penguins with atypical bill proportions.
+
+```{r}
+penguins %>% 
+  ggplot() + 
+  geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g)) + 
+  labs(title = "Flipper Length and Body Mass",
+       x = "Flipper Length (mm)", 
+       y = "Body Mass (g)")
+
+```
+
+We can observe a positive relationship between flipper length and body mass in the scatter plot, since the longer the flipper, the larger the body mass is likely to be. From the plot, we can see a strong and consistent relationship. This helps us to understand how much body mass is related to flipper length and what other factors cause variations in penguin size.
+
+## The associations between two categorical variables can be explored using bar plots and fill
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_bar(mapping = aes(x = island, fill = species)) +
+  labs(title = "Species by Island",
+       x = "Island",
+       y = "Species")
+```
+
+The bar plot gives the distribution of penguin species on each of the three islands. Each of the bars represents the number of penguins of the specific color in the corresponding island. From the plot, we notice that Biscoe Island hosts more penguins compared to Dream and Torgersen Islands. Moreover, the plot indicates that every island has species differentials; even though the three islands share species abundance, including the Adelie and Gentoo penguins, being highly abundant on all three islands, whereas on Dream Island, Chinstrap penguins occur. The geospatial display depicts variation in the penguin population according to islands.
+
+## One numerical and one categorical variable can be compared using side-by-side plots, or faceted plots
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_boxplot(mapping = aes(x = bill_depth_mm, y = species)) +
+  labs(title = "Bill Depth by Species",
+       x = "Bill Depth (mm)",
+       y = "")
+```
+
+The boxplot shows the distribution of bill depth in millimeters for three species of penguins. For the Gentoo penguins, the bill depths range is from about 13.5 mm to 17mm, with a median of about 15.3 mm. The variability of bill depths of the Chinstrap penguin has a narrower range, encompassing most of the measurements around a median of about 18.7 mm. The Adelie penguin has a narrow range, and a median bill depth of about 17.6 mm. Overall, this plot shows large differences in bill depth between species, which may imply that bill depth is one of the most important morphological characteristics for these species' differentiation.
+
+```{r}
+penguins %>%
+  ggplot() +
+  geom_histogram(mapping = aes(x = bill_depth_mm)) +
+  facet_wrap(~species, ncol = 1) +
+  labs(title = "Bill Depth by Species",
+       x = "Bill Depth (mm)",
+       y = "")
+
+```
+
+The histogram shows a distinct pattern with regard to the bill depth: the Adelie penguin is concentrated at about 17 mm, representing minimal variability in its bill depth, while the data for the Chinstrap penguins is quite sparse with measurements scattered from 17 to 20 mm making any analytical overview of the trend very hard. The most variable are Gentoo penguins with bill depths mostly between 14 and 17mm, peaking at about 16mm, which suggests a possible greater variability than the other species. From the following plot, there are species -specific differences in bill depth, and data for Adelie and Gentoo penguins is much more abundant than that for the Chinstrap penguins.
+
+## Advanced Plotting 
+
+In this part of the analysis we aim to learn how to build more complex plots. plots.
+
+```{r}
+penguins %>%
+  filter(!is.na(sex)) %>%
+  ggplot() +
+  geom_point(mapping = aes(x = bill_length_mm, 
+                           y = flipper_length_mm,
+                           color = species,
+                           shape = sex)) +
+  geom_smooth(mapping = aes(x = bill_length_mm,
+                            y = flipper_length_mm,
+                            color = species),
+              method = "lm") +
+  facet_grid(island ~ sex, scales = "free") +
+  labs(title = "Flipper and Bill Lengths by Species and Sex",
+       x = "Bill Length (mm)",
+       y = "Flipper Length(mm)") +
+  theme_light()
+```
+
+The plot shows the relationship between penguin bill length and flipper length, categorised by species and sex across islands. Each panel corresponds to a specific island-sex combination because of the facet_grid(island \~ sex, scales = "free") code for variable comparisons. The geom_point function adds colored data points by species and sex, while geom_smooth adds species regression lines. In the case of Gentoo penguins on Biscoe Island, there is a strong positive correlation between bill and flipper lengths, especially for males, as can be seen from the steep regression line. Other species, such as Adelie, have sparse data points and inconsistent trends across different islands. The use of theme_light ensures a clean aesthetic, while the custom labs provides meaningful labels for the axes and title. In general, this code has been very effective at showing interspecies and interisland differences in penguin morphology.
+
+```{r}
+penguins %>%
+  filter(!is.na(sex)) %>%
+  ggplot() +
+  geom_point(mapping = aes(x = bill_depth_mm, 
+                           y = body_mass_g,
+                           color = species,
+                           shape = sex)) +
+  geom_smooth(mapping = aes(x = bill_depth_mm,
+                            y = body_mass_g,
+                            color = species),
+              method = "lm") +
+  facet_grid(island ~ sex, scales = "free") +
+  labs(title = "Body Mass and Bill Depth by Species and Sex",
+       x = "Bill Depth (mm)",
+       y = "Body Mass (g)") +
+  theme_light()
+
+```
+
+This code will plot body mass against bill depth, with points differentiated by species (color) and sex (shape). It also adds a linear model trend line using (lm) for each species and facets the data by island and sex. Since facet_grid uses scales = "free", the scales will adjust independently for each facet to fit the data range.
+
+## A Final Question 
+
+```{r}
+# Check for NA values and ensure data is clean
+clean_penguins <- penguins %>%
+  filter(!is.na(bill_length_mm))
+
+# Calculate the overall mean bill length
+mean_bill_length <- mean(clean_penguins$bill_length_mm)
+
+# Perform a one-sample t-test for the entire population
+t_test_population <- t.test(clean_penguins$bill_length_mm, 
+                             mu = 45, 
+                             alternative = "greater")
+
+# View the results
+mean_bill_length
+t_test_population
+
+# Subset analysis (example: Adelie species)
+adelie_penguins <- clean_penguins %>%
+  filter(species == "Adelie")
+
+mean_bill_length_adelie <- mean(adelie_penguins$bill_length_mm)
+
+t_test_adelie <- t.test(adelie_penguins$bill_length_mm, 
+                        mu = 45, 
+                        alternative = "greater")
+
+# View the subset results
+mean_bill_length_adelie
+t_test_adelie
+
+```
+
+The penguins' data set could be used to test if the average bill length is greater than 45 mm using statistical testing. One-sample t-test could be performed to test if the overall mean bill length is significantly higher than 45 mm. This same testing could be done on subsets, such as for species or islands, by filtering the data and re-testing. It would be very strong evidence that the mean bill length is greater than 45 mm if the p-value is less than 0.05. For small subsets or very noisy data, the confidence will be lower either due to higher variability or smaller sample sizes.
