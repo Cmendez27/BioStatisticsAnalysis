@@ -1,0 +1,49 @@
+---
+title: "Great Lake Fish Analysis"
+author: "Cesia Mendez"
+format: html
+editor: visual
+execute:
+  keep-md: true
+---
+
+## Great Lake Fish Analysis 
+
+Commercial fish catch data were published by the Great Lakes Fishery Commission in 1962 and covered the period 1867-1960. A supplement covering the years 1961-1968 was released in 1970, and a revised edition covering the years 1867-1977 was published in 1979. This third update of a web-based version covers the period 1867-2015. The intent is to update at approximately five-year intervals. The files are intended for open use by the public. We ask only that the commission be acknowledged when these records are used in presentations and publications.
+
+## Getting Data 
+
+Data will be updated here
+
+```{r}
+fishing <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-06-08/fishing.csv')
+stocked <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-06-08/stocked.csv')
+```
+
+```{r}
+head(fishing)
+```
+
+```{r}
+#install.packages("tidymodels")
+library(tidymodels)
+
+my_data_splits <- initial_split(fishing, prop = 0.5)
+
+exploratory_data <- training(my_data_splits)
+test_data <- testing(my_data_splits)
+```
+
+```{r}
+head(test_data)
+```
+
+```{r}
+tail(test_data)
+```
+
+### Hypotheses 
+
+1.  Do the number of species vary by region?
+2.  Do the types of species vary by region?
+3.  Does the number of species in a region depend on the resources available in that region?
