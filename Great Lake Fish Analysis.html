@@ -107,21 +107,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="great-lakes-fish-analysis">Great Lakes Fish Analysis</h2>
 <section id="abstract" class="level3">
 <h3 class="anchored" data-anchor-id="abstract">Abstract</h3>
+<p>This analysis examines how fish species distribute across different places using data visualization techniques. The purpose of this analysis is to determine how the different species vary by region and whether particular locations have higher concentration of specific species.</p>
 </section>
-</section>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
 <p>The Great Lakes, one of the largest freshwater ecosystems in the world, have been essential to maintaining commercial fish production for more than a hundred years. The fisheries in this basin have been an important economic and ecological resource, benefiting local communities, industries, and biodiversity. An understanding of trends in fish production across different locations and species proves to be most helpful in judging the health of ecosystems, trends in populations, and sustainability in fisheries management.</p>
 <p>This project examines historical and current commercial fish production records in the Great Lakes from 1867 to 2020. The data set, which was gathered from a number of government and tribal agencies, provides a comprehensive report of fish catches from different locations, species, and time intervals. Originally collected in 1940 by the international Board of Inquiry for the Great Lakes Fisheries, the data have been updated periodically by the Great Lakes Fisheries, the data have been updated periodically by the Great Lakes Fishery Commission and other agencies, keeping it current and accessible to researchers.</p>
 <p>For the analysis in this study, the region of occurrence and the species of fish are the two key variables. the top Five most caught species of fish have been emphasized in this research in a comparison of their occurrence over the chosen regions of Michigan (MI), New York (NY), Ohio (OH), Wisconsin (WI), and Ontario (ONT). The aim of this study is to investigate the potential variability of fish species in Great Lakes locations and hence increase the general understanding of regional ecological diversity and species distributional patterns.</p>
 </section>
-<section id="hypothesis" class="level2">
-<h2 class="anchored" data-anchor-id="hypothesis">Hypothesis</h2>
-<p><strong>Null Hypothesis:</strong> The distribution of species does not vary significantly across its different regions. In other words, the species can exist in any region, and there is no relationship between the type of species and the location.</p>
-<p><strong>Alternative Hypothesis:</strong> The species of fish are highly distributed among different regions within the Great Lakes. In other words, some species are more predominant in certain regions, indicating a relationship between the types of species and the regional location.</p>
+<section id="hypothesis" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis">Hypothesis</h3>
+<p>The types of species vary by region due to their unique environmental conditions.</p>
 </section>
-<section id="gathering-data" class="level2">
-<h2 class="anchored" data-anchor-id="gathering-data">Gathering Data</h2>
+<section id="gathering-data" class="level3">
+<h3 class="anchored" data-anchor-id="gathering-data">Gathering Data</h3>
 <p>The following code imports the tidyverse package and reads in two data sets with the read_cvs() function from readr. The fishing data set contains fishing data, while the stocked data set holds data about stocked fish. Each data set is read from a URL and imported into separate variables to be analyzed.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("tidyverse")</span></span>
@@ -168,8 +167,8 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 </div>
 </div>
 </section>
-<section id="data-split" class="level2">
-<h2 class="anchored" data-anchor-id="data-split">Data Split</h2>
+<section id="data-split" class="level3">
+<h3 class="anchored" data-anchor-id="data-split">Data Split</h3>
 <p>The following code splits the fishing data set into a training and a test set. The training data is put into exploratory_data, and the test data is put into test_data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("tidymodels")</span></span>
@@ -193,7 +192,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
 ✖ recipes::step()   masks stats::step()
-• Search for functions across packages at https://www.tidymodels.org/find/</code></pre>
+• Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>my_data_splits <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(fishing, <span class="at">prop =</span> <span class="fl">0.5</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -201,8 +200,8 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(my_data_splits)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="load-and-inspect-data" class="level2">
-<h2 class="anchored" data-anchor-id="load-and-inspect-data">Load and Inspect data</h2>
+<section id="load-and-inspect-data" class="level3">
+<h3 class="anchored" data-anchor-id="load-and-inspect-data">Load and Inspect data</h3>
 <p>The use of the str() function will provide an overview of the data, including the types of variables and a preview of the data. This will help to identify any issues like missing values. This will confirm the presence of the columns like species and regions which are important for this analysis.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View the structure of the test_data</span></span>
@@ -214,7 +213,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
  $ species    : chr [1:32853] "American Eel" "American Eel" "American Eel" "American Eel" ...
  $ grand_total: num [1:32853] 1 1 1 1 0 0 0 0 0 0 ...
  $ comments   : chr [1:32853] NA NA NA NA ...
- $ region     : chr [1:32853] "Michigan (MI)" "Ohio (OH)" "Pennsylvania (PA)" "Canada (ONT)" ...
+ $ region     : chr [1:32853] "New York (NY)" "Pennsylvania (PA)" "U.S. Total" "Canada (ONT)" ...
  $ values     : num [1:32853] 0 0 0 1 0 0 0 0 0 0 ...
  - attr(*, "spec")=
   .. cols(
@@ -231,8 +230,8 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 </div>
 <p>After analyzing the test_data by running the str(test_data) function, it was found that the data set consists of 32,853 rows and 7 columns. The data set contains numeric variables such as year, grand total, and values. In addition to this, the data set contains categorical variables such as region, lake, species, and comments. Based on the results, no issues are present in the column types. The data set is ready to be used for further analysis.</p>
 </section>
-<section id="count-species-by-region" class="level2">
-<h2 class="anchored" data-anchor-id="count-species-by-region">Count Species by Region</h2>
+<section id="count-species-by-region" class="level3">
+<h3 class="anchored" data-anchor-id="count-species-by-region">Count Species by Region</h3>
 <p>The following coding function will help to calculate the number of occurrences for each fish species across different regions. It will group and count species by region, then it will reshape the data so that species names become column headers. The code fills in any missing values with 0, to make sure there is a full summary of the distribution of species across regions.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fishing <span class="sc">%&gt;%</span></span>
@@ -263,8 +262,8 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 </div>
 <p>This is a format table where rows correspond to regions, and columns correspond to species of fish. The value inside the table is the number of recorded occurrences of the species for that region. If the species does not occur in that region, the value is 0. This summary will allow to analyze how fish species are distributed across different regions.</p>
 </section>
-<section id="visualizing-species-distribution" class="level2">
-<h2 class="anchored" data-anchor-id="visualizing-species-distribution">Visualizing Species Distribution</h2>
+<section id="visualizing-species-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-species-distribution">Visualizing Species Distribution</h3>
 <p>The following coding function provides a bar graph of the distribution of fish species across the different regions. To enhance readability and prevent overcrowding, the five most common species by total count were used. The bars are ordered by region, to allow an easy comparison.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select top 5 species by total count from the test_data</span></span>
@@ -293,7 +292,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 357 rows containing missing values or values outside the scale range
+<pre><code>Warning: Removed 354 rows containing missing values or values outside the scale range
 (`geom_bar()`).</code></pre>
 </div>
 <div class="cell-output-display">
@@ -306,8 +305,9 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 </div>
 <p>The bar graph illustrates the frequency of the top five species in the areas that were chosen. Ohio (OH) has the most amount of Cisco species, and Canada (ONT) has much more Yellow Perch species than the other regions. Other species, such as Lake Trout and Lake Whitefish, are spread out among different regions but in lower overall counts. Species variations reveal differences in distribution by region among fish, with potential explanations that might include environmental circumstances and fishing activity.</p>
 </section>
-<section id="something-goes-here" class="level2">
-<h2 class="anchored" data-anchor-id="something-goes-here">SOMETHING GOES HERE</h2>
+<section id="variation-of-fish-species-counts-across-regions-of-the-great-lakes" class="level3">
+<h3 class="anchored" data-anchor-id="variation-of-fish-species-counts-across-regions-of-the-great-lakes">Variation of Fish Species Counts Across Regions of the Great Lakes</h3>
+<p>The following code generates a box-plot to visualize the distribution of number of fish species across different regions of the Great Lakes. Based on an examination of the range of the number of species, the box plot helps to identify whether there are significant differences in the umber of species by region.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_data, <span class="fu">aes</span>(<span class="at">x =</span> values, <span class="at">y =</span> species, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outliers =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
@@ -316,7 +316,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Fish Species"</span>) <span class="sc">+</span></span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 357 rows containing non-finite outside the scale range
+<pre><code>Warning: Removed 354 rows containing non-finite outside the scale range
 (`stat_boxplot()`).</code></pre>
 </div>
 <div class="cell-output-display">
@@ -327,23 +327,8 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a contingency table of species count by region</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>contingency_table <span class="ot">&lt;-</span> <span class="fu">table</span>(filtered_data<span class="sc">$</span>species, filtered_data<span class="sc">$</span>region)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the Chi-Squared Test for Independence</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>chi_squared_result <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(contingency_table)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the result</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(chi_squared_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's Chi-squared test
-
-data:  contingency_table
-X-squared = 121.31, df = 12, p-value &lt; 2.2e-16</code></pre>
-</div>
-</div>
+<p>The box-plot displays the counts of abundance of different species in different regions. It represents the range of variability of abundance. Cisco and Yellow Perch present the highest counts, ad Ohio (OH) and Canada (ONT) the highest variability. The wide interquartile range for these species represents large differences in the population of fish between regions. Lake Whitefish and Lake Trout present more even distributions with fewer extreme values. Evidence of the occurrence of outliers indicates that some regions can have extremely high or low abundances of individual species, emphasizing regional effects on fish habitats.</p>
+</section>
 </section>
 
 </main>
