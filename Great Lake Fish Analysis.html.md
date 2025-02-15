@@ -16,9 +16,11 @@ execute:
 
 ## Introduction
 
-The Great Lakes form part of an ecosystem in the aquatic world and regional fisheries due to their numerous fish species. Sometimes, fish species within the same lake may be determined by the conditions around such lakes. This paper focuses on the species of fish within the Great Lakes and, in particular, tries to find out if there are differences in species among regions within the lakes.\
-In this analysis, there are two major variables of interest: species of fish and the region within which they occur. The species variable includes different types of fish such as Lake Sturgeon, Northern Pike, Suckers, White Perch, and Yellow Perch, among others. The region variable refers to different areas reporting their fish populations; examples include the U.S. Total (MI), and Canada (ONT).\
-This study aims to investigate how fish species vary among regions in the Great Lakes, which will also shed light on the regional ecological differences and the species distribution patterns.
+The Great Lakes, one of the largest freshwater ecosystems in the world, have been essential to maintaining commercial fish production for more than a hundred years. The fisheries in this basin have been an important economic and ecological resource, benefiting local communities, industries, and biodiversity. An understanding of trends in fish production across different locations and species proves to be most helpful in judging the health of ecosystems, trends in populations, and sustainability in fisheries management.
+
+This project examines historical and current commercial fish production records in the Great Lakes from 1867 to 2020. The data set, which was gathered from a number of government and tribal agencies, provides a comprehensive report of fish catches from different locations, species, and time intervals. Originally collected in 1940 by the international Board of Inquiry for the Great Lakes Fisheries, the data have been updated periodically by the Great Lakes Fisheries, the data have been updated periodically by the Great Lakes Fishery Commission and other agencies, keeping it current and accessible to researchers.
+
+For the analysis in this study, the region of occurrence and the species of fish are the two key variables. the top Five most caught species of fish have been emphasized in this research in a comparison of their occurrence over the chosen regions of Michigan (MI), New York (NY), Ohio (OH), Wisconsin (WI), and Ontario (ONT). The aim of this study is to investigate the potential variability of fish species in Great Lakes locations and hence increase the general understanding of regional ecological diversity and species distributional patterns.
 
 ## Hypothesis
 
@@ -27,6 +29,8 @@ This study aims to investigate how fish species vary among regions in the Great 
 **Alternative Hypothesis:** The species of fish are highly distributed among different regions within the Great Lakes. In other words, some species are more predominant in certain regions, indicating a relationship between the types of species and the regional location.
 
 ## Gathering Data
+
+The following code imports the tidyverse package and reads in two data sets with the read_cvs() function from readr. The fishing data set contains fishing data, while the stocked data set holds data about stocked fish. Each data set is read from a URL and imported into separate variables to be analyzed.
 
 
 
@@ -110,7 +114,9 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 
 
 
-SOMETHING GOES HERE
+## Data Split 
+
+The following code splits the fishing data set into a training and a test set. The training data is put into exploratory_data, and the test data is put into test_data.
 
 
 
@@ -154,7 +160,7 @@ library(tidymodels)
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
 ✖ recipes::step()   masks stats::step()
-• Dig deeper into tidy modeling with R at https://www.tmwr.org
+• Search for functions across packages at https://www.tidymodels.org/find/
 ```
 
 
@@ -187,13 +193,13 @@ str(test_data)
 
 ```
 spc_tbl_ [32,853 × 7] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ year       : num [1:32853] 1991 1991 1992 1992 1993 ...
+ $ year       : num [1:32853] 1991 1991 1991 1991 1992 ...
  $ lake       : chr [1:32853] "Erie" "Erie" "Erie" "Erie" ...
  $ species    : chr [1:32853] "American Eel" "American Eel" "American Eel" "American Eel" ...
- $ grand_total: num [1:32853] 1 1 0 0 0 0 0 0 0 0 ...
+ $ grand_total: num [1:32853] 1 1 1 1 0 0 0 0 0 0 ...
  $ comments   : chr [1:32853] NA NA NA NA ...
- $ region     : chr [1:32853] "Michigan (MI)" "New York (NY)" "Michigan (MI)" "U.S. Total" ...
- $ values     : num [1:32853] 0 0 0 0 0 0 0 0 0 0 ...
+ $ region     : chr [1:32853] "Michigan (MI)" "Ohio (OH)" "Pennsylvania (PA)" "Canada (ONT)" ...
+ $ values     : num [1:32853] 0 0 0 1 0 0 0 0 0 0 ...
  - attr(*, "spec")=
   .. cols(
   ..   year = col_double(),
@@ -264,6 +270,8 @@ This is a format table where rows correspond to regions, and columns correspond 
 
 ## Visualizing Species Distribution
 
+The following coding function provides a bar graph of the distribution of fish species across the different regions. To enhance readability and prevent overcrowding, the five most common species by total count were used. The bars are ordered by region, to allow an easy comparison.
+
 
 
 ::: {.cell}
@@ -299,7 +307,7 @@ ggplot(filtered_data, aes(x = species, y = values, fill = region)) +  # Use 'val
 ::: {.cell-output .cell-output-stderr}
 
 ```
-Warning: Removed 323 rows containing missing values or values outside the scale range
+Warning: Removed 357 rows containing missing values or values outside the scale range
 (`geom_bar()`).
 ```
 
@@ -308,5 +316,66 @@ Warning: Removed 323 rows containing missing values or values outside the scale 
 
 ::: {.cell-output-display}
 ![](Great-Lake-Fish-Analysis_files/figure-html/unnamed-chunk-5-1.png){width=672}
+:::
+:::
+
+
+
+The bar graph illustrates the frequency of the top five species in the areas that were chosen. Ohio (OH) has the most amount of Cisco species, and Canada (ONT) has much more Yellow Perch species than the other regions. Other species, such as Lake Trout and Lake Whitefish, are spread out among different regions but in lower overall counts. Species variations reveal differences in distribution by region among fish, with potential explanations that might include environmental circumstances and fishing activity.
+
+## SOMETHING GOES HERE 
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+ggplot(filtered_data, aes(x = values, y = species, fill = region)) +
+  geom_boxplot(outliers = FALSE) +
+  labs(title = "Species Count Distribution by Region",
+       x = "Species Count",
+       y = "Fish Species") +
+  theme_minimal()
+```
+
+::: {.cell-output .cell-output-stderr}
+
+```
+Warning: Removed 357 rows containing non-finite outside the scale range
+(`stat_boxplot()`).
+```
+
+
+:::
+
+::: {.cell-output-display}
+![](Great-Lake-Fish-Analysis_files/figure-html/unnamed-chunk-6-1.png){width=672}
+:::
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
+# Create a contingency table of species count by region
+contingency_table <- table(filtered_data$species, filtered_data$region)
+
+# Perform the Chi-Squared Test for Independence
+chi_squared_result <- chisq.test(contingency_table)
+
+# Print the result
+print(chi_squared_result)
+```
+
+::: {.cell-output .cell-output-stdout}
+
+```
+
+	Pearson's Chi-squared test
+
+data:  contingency_table
+X-squared = 121.31, df = 12, p-value < 2.2e-16
+```
+
+
 :::
 :::
