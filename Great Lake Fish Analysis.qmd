@@ -67,7 +67,7 @@ After analyzing the test_data by running the str(test_data) function, it was fou
 The following coding function will help to calculate the number of occurrences for each fish species across different regions. It will group and count species by region, then it will reshape the data so that species names become column headers. The code fills in any missing values with 0, to make sure there is a full summary of the distribution of species across regions.
 
 ```{r}
-fishing %>%
+test_data%>%
   count(region, species) %>%
   pivot_wider(names_from = species, values_from = n, values_fill = list(n = 0))
 
@@ -125,3 +125,72 @@ ggplot(filtered_data, aes(x = values, y = species, fill = region)) +
 ```
 
 The box-plot displays the counts of abundance of different species in different regions. It represents the range of variability of abundance. Cisco and Yellow Perch present the highest counts, ad Ohio (OH) and Canada (ONT) the highest variability. The wide interquartile range for these species represents large differences in the population of fish between regions. Lake Whitefish and Lake Trout present more even distributions with fewer extreme values. Evidence of the occurrence of outliers indicates that some regions can have extremely high or low abundances of individual species, emphasizing regional effects on fish habitats.
+
+### Methodological Analysis 
+
+### Load and inspect data 
+
+The str (fishing) function will provide an overview of the full data set, including the types of variables and a preview of the data. However, the previous code, str(test_data) was used to display the structure of only the test_data subset.
+
+```{r}
+# View the structure of the dataset
+str(fishing)
+```
+
+The output demonstrates that the fishing data set had 65,706 rows and 7 columns. These columns include year, lake, species, grand_total, comments, region, and values. The output also gives the types of data of each column, helping to understand how the data is organized.
+
+### Count Species By Region 
+
+The following code counts how often each species of fish occurs in each region with the help of the count() function. Then, it reshapes the data into a broader format with the help of the function pivot_wider() so that each species of fish is a column, and the count values are placed in these columns. If there are any missing species in a place, the code fills those blank space with 0 using the function values_fill=list(n=0).
+
+```{r}
+fishing%>%
+  count(region, species) %>%
+  pivot_wider(names_from = species, values_from = n, values_fill = list(n = 0))
+
+```
+
+The output of the code is a table in which each row represents a region, and each column represents the number of time a particular fish species was found in the region. When a species is not found in a region, the count count for that species is represented as 0. In this scenario the code works with the entire fishing data set, which includes all the data without any splitting. However, both codes test_data and fishing count the number of occurrences of each species in each region.
+
+### Visualizing Species Distribution 
+
+The following code analyzes the entire fishing data set in order to identify the top five species with the highest total counts. It then groups the data by species, sums up the counts for each species, and selects the top five species. In addition to this, it filters the data for the top five species and examines individual regions. Finally, it generates a bar plot of the distribution of these top five species by region where each bar represents the number of species in a specific region.
+
+```{r}
+# Select top 5 species by total count
+top_species <- fishing %>%
+  group_by(species) %>%
+  summarise(total_count = sum(values, na.rm = TRUE)) %>%  # Assuming 'values' represents species count
+  top_n(5, total_count)  # Selecting the top 5 species
+
+# Filter the data for only the top species
+filtered_data <- fishing %>%
+  filter(species %in% top_species$species)
+
+# Define regions to focus on
+regions_of_interest <- c("Michigan (MI)", "New York (NY)", "Ohio (OH)", "Canada (ONT)", "Wisconsin (WI)")
+
+# Filter the data for only the regions of interest
+filtered_data <- filtered_data %>%
+  filter(region %in% regions_of_interest)
+
+# Create the bar plot for the top 5 species by region
+ggplot(filtered_data, aes(x = species, y = values, fill = region)) +  # Use 'values' for species count
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Top 5 Species Distribution by Region (Full Dataset)",
+       x = "Fish Species",
+       y = "Count of Species") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme_minimal()
+
+```
+
+```{r}
+# Create the box plot for species count distribution in the top 5 regions
+ggplot(filtered_data, aes(x = values, y = species, fill = region)) +
+  geom_boxplot(outlier.shape = NA) +  # Hides outliers
+  labs(title = "Species Count Distribution in the Top 5 Regions",
+       x = "Species Count",
+       y = "Fish Species") +
+  theme_minimal()
+```
