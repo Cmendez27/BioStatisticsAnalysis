@@ -12,7 +12,7 @@ execute:
 
 ## Great Lakes Fish Analysis
 
-### Abstract 
+### Abstract
 
 This analysis examines how fish species distribute across different places using data visualization techniques. The purpose of this analysis is to determine how the different species vary by region and whether particular locations have higher concentration of specific species.
 
@@ -114,7 +114,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 
 
 
-### Data Split 
+### Data Split
 
 The following code splits the fishing data set into a training and a test set. The training data is put into exploratory_data, and the test data is put into test_data.
 
@@ -198,7 +198,7 @@ spc_tbl_ [32,853 × 7] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
  $ species    : chr [1:32853] "American Eel" "American Eel" "American Eel" "American Eel" ...
  $ grand_total: num [1:32853] 1 1 1 1 0 0 0 0 0 0 ...
  $ comments   : chr [1:32853] NA NA NA NA ...
- $ region     : chr [1:32853] "New York (NY)" "Pennsylvania (PA)" "U.S. Total" "Canada (ONT)" ...
+ $ region     : chr [1:32853] "Michigan (MI)" "New York (NY)" "Pennsylvania (PA)" "Canada (ONT)" ...
  $ values     : num [1:32853] 0 0 0 1 0 0 0 0 0 0 ...
  - attr(*, "spec")=
   .. cols(
@@ -307,7 +307,7 @@ ggplot(filtered_data, aes(x = species, y = values, fill = region)) +  # Use 'val
 ::: {.cell-output .cell-output-stderr}
 
 ```
-Warning: Removed 354 rows containing missing values or values outside the scale range
+Warning: Removed 324 rows containing missing values or values outside the scale range
 (`geom_bar()`).
 ```
 
@@ -323,7 +323,7 @@ Warning: Removed 354 rows containing missing values or values outside the scale 
 
 The bar graph illustrates the frequency of the top five species in the areas that were chosen. Ohio (OH) has the most amount of Cisco species, and Canada (ONT) has much more Yellow Perch species than the other regions. Other species, such as Lake Trout and Lake Whitefish, are spread out among different regions but in lower overall counts. Species variations reveal differences in distribution by region among fish, with potential explanations that might include environmental circumstances and fishing activity.
 
-### Variation of Fish Species Counts Across Regions of the Great Lakes 
+### Variation of Fish Species Counts Across Regions of the Great Lakes
 
 The following code generates a box-plot to visualize the distribution of number of fish species across different regions of the Great Lakes. Based on an examination of the range of the number of species, the box plot helps to identify whether there are significant differences in the umber of species by region.
 
@@ -343,7 +343,7 @@ ggplot(filtered_data, aes(x = values, y = species, fill = region)) +
 ::: {.cell-output .cell-output-stderr}
 
 ```
-Warning: Removed 354 rows containing non-finite outside the scale range
+Warning: Removed 324 rows containing non-finite outside the scale range
 (`stat_boxplot()`).
 ```
 

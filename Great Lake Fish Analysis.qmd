@@ -9,7 +9,7 @@ execute:
 
 ## Great Lakes Fish Analysis
 
-### Abstract 
+### Abstract
 
 This analysis examines how fish species distribute across different places using data visualization techniques. The purpose of this analysis is to determine how the different species vary by region and whether particular locations have higher concentration of specific species.
 
@@ -36,7 +36,7 @@ fishing <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/ti
 stocked <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2021/2021-06-08/stocked.csv')
 ```
 
-### Data Split 
+### Data Split
 
 The following code splits the fishing data set into a training and a test set. The training data is put into exploratory_data, and the test data is put into test_data.
 
@@ -111,7 +111,7 @@ ggplot(filtered_data, aes(x = species, y = values, fill = region)) +  # Use 'val
 
 The bar graph illustrates the frequency of the top five species in the areas that were chosen. Ohio (OH) has the most amount of Cisco species, and Canada (ONT) has much more Yellow Perch species than the other regions. Other species, such as Lake Trout and Lake Whitefish, are spread out among different regions but in lower overall counts. Species variations reveal differences in distribution by region among fish, with potential explanations that might include environmental circumstances and fishing activity.
 
-### Variation of Fish Species Counts Across Regions of the Great Lakes 
+### Variation of Fish Species Counts Across Regions of the Great Lakes
 
 The following code generates a box-plot to visualize the distribution of number of fish species across different regions of the Great Lakes. Based on an examination of the range of the number of species, the box plot helps to identify whether there are significant differences in the umber of species by region.
 
