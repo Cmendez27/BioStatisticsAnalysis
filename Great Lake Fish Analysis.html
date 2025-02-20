@@ -208,13 +208,13 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>spc_tbl_ [32,853 × 7] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ year       : num [1:32853] 1991 1991 1991 1991 1992 ...
+ $ year       : num [1:32853] 1991 1991 1992 1992 1993 ...
  $ lake       : chr [1:32853] "Erie" "Erie" "Erie" "Erie" ...
  $ species    : chr [1:32853] "American Eel" "American Eel" "American Eel" "American Eel" ...
- $ grand_total: num [1:32853] 1 1 1 1 0 0 0 0 0 0 ...
+ $ grand_total: num [1:32853] 1 1 0 0 0 0 0 0 0 0 ...
  $ comments   : chr [1:32853] NA NA NA NA ...
- $ region     : chr [1:32853] "Michigan (MI)" "New York (NY)" "Pennsylvania (PA)" "Canada (ONT)" ...
- $ values     : num [1:32853] 0 0 0 1 0 0 0 0 0 0 ...
+ $ region     : chr [1:32853] "Michigan (MI)" "Pennsylvania (PA)" "Ohio (OH)" "Pennsylvania (PA)" ...
+ $ values     : num [1:32853] 0 0 0 0 0 0 0 0 0 0 ...
  - attr(*, "spec")=
   .. cols(
   ..   year = col_double(),
@@ -234,22 +234,22 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <h3 class="anchored" data-anchor-id="count-species-by-region">Count Species by Region</h3>
 <p>The following coding function will help to calculate the number of occurrences for each fish species across different regions. It will group and count species by region, then it will reshape the data so that species names become column headers. The code fills in any missing values with 0, to make sure there is a full summary of the distribution of species across regions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fishing <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>test_data<span class="sc">%&gt;%</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(region, species) <span class="sc">%&gt;%</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> species, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="fu">list</span>(<span class="at">n =</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 24 × 52
    region      `Amercian Eel` `American Eel` `Blue Pike` Bowfin Buffalo Bullhead
    &lt;chr&gt;                &lt;int&gt;          &lt;int&gt;       &lt;int&gt;  &lt;int&gt;   &lt;int&gt;    &lt;int&gt;
- 1 Canada (ON…            130              9         187    107      47       20
- 2 Georgian B…              0              0           0      0      29        0
+ 1 Canada (ON…             67              2         109     65      20        9
+ 2 Georgian B…              0              0           0      0      16        0
  3 Green Bay …              0              0           0      0       1        0
  4 Green Bay …              0              0           0      0       1        0
- 5 Huron Prop…              0              0           0      0      29        0
+ 5 Huron Prop…              0              0           0      0      18        0
  6 Illinois (…              0              0           0      0       1        0
- 7 Indiana (I…              0              0           0      0       1        0
+ 7 Indiana (I…              0              0           0      0       0        0
  8 MI State T…              0              0           0      0       1        0
- 9 Mich. Prop…              0              0           0      0       1        0
+ 9 Mich. Prop…              0              0           0      0       0        0
 10 Mich. Prop…              0              0           0      0       1        0
 # ℹ 14 more rows
 # ℹ 45 more variables: Bullheads &lt;int&gt;, Burbot &lt;int&gt;, Carp &lt;int&gt;,
@@ -292,7 +292,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 324 rows containing missing values or values outside the scale range
+<pre><code>Warning: Removed 342 rows containing missing values or values outside the scale range
 (`geom_bar()`).</code></pre>
 </div>
 <div class="cell-output-display">
@@ -316,7 +316,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Fish Species"</span>) <span class="sc">+</span></span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 324 rows containing non-finite outside the scale range
+<pre><code>Warning: Removed 342 rows containing non-finite outside the scale range
 (`stat_boxplot()`).</code></pre>
 </div>
 <div class="cell-output-display">
@@ -328,6 +328,138 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 </div>
 </div>
 <p>The box-plot displays the counts of abundance of different species in different regions. It represents the range of variability of abundance. Cisco and Yellow Perch present the highest counts, ad Ohio (OH) and Canada (ONT) the highest variability. The wide interquartile range for these species represents large differences in the population of fish between regions. Lake Whitefish and Lake Trout present more even distributions with fewer extreme values. Evidence of the occurrence of outliers indicates that some regions can have extremely high or low abundances of individual species, emphasizing regional effects on fish habitats.</p>
+</section>
+<section id="methodological-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="methodological-analysis">Methodological Analysis</h3>
+</section>
+<section id="load-and-inspect-data-1" class="level3">
+<h3 class="anchored" data-anchor-id="load-and-inspect-data-1">Load and inspect data</h3>
+<p>The str (fishing) function will provide an overview of the full data set, including the types of variables and a preview of the data. However, the previous code, str(test_data) was used to display the structure of only the test_data subset.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View the structure of the dataset</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(fishing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [65,706 × 7] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ year       : num [1:65706] 1991 1991 1991 1991 1991 ...
+ $ lake       : chr [1:65706] "Erie" "Erie" "Erie" "Erie" ...
+ $ species    : chr [1:65706] "American Eel" "American Eel" "American Eel" "American Eel" ...
+ $ grand_total: num [1:65706] 1 1 1 1 1 1 0 0 0 0 ...
+ $ comments   : chr [1:65706] NA NA NA NA ...
+ $ region     : chr [1:65706] "Michigan (MI)" "New York (NY)" "Ohio (OH)" "Pennsylvania (PA)" ...
+ $ values     : num [1:65706] 0 0 0 0 0 1 0 0 0 0 ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   year = col_double(),
+  ..   lake = col_character(),
+  ..   species = col_character(),
+  ..   grand_total = col_double(),
+  ..   comments = col_character(),
+  ..   region = col_character(),
+  ..   values = col_double()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+<p>The output demonstrates that the fishing data set had 65,706 rows and 7 columns. These columns include year, lake, species, grand_total, comments, region, and values. The output also gives the types of data of each column, helping to understand how the data is organized.</p>
+</section>
+<section id="count-species-by-region-1" class="level3">
+<h3 class="anchored" data-anchor-id="count-species-by-region-1">Count Species By Region</h3>
+<p>The following code counts how often each species of fish occurs in each region with the help of the count() function. Then, it reshapes the data into a broader format with the help of the function pivot_wider() so that each species of fish is a column, and the count values are placed in these columns. If there are any missing species in a place, the code fills those blank space with 0 using the function values_fill=list(n=0).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fishing<span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(region, species) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> species, <span class="at">values_from =</span> n, <span class="at">values_fill =</span> <span class="fu">list</span>(<span class="at">n =</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 24 × 52
+   region      `Amercian Eel` `American Eel` `Blue Pike` Bowfin Buffalo Bullhead
+   &lt;chr&gt;                &lt;int&gt;          &lt;int&gt;       &lt;int&gt;  &lt;int&gt;   &lt;int&gt;    &lt;int&gt;
+ 1 Canada (ON…            130              9         187    107      47       20
+ 2 Georgian B…              0              0           0      0      29        0
+ 3 Green Bay …              0              0           0      0       1        0
+ 4 Green Bay …              0              0           0      0       1        0
+ 5 Huron Prop…              0              0           0      0      29        0
+ 6 Illinois (…              0              0           0      0       1        0
+ 7 Indiana (I…              0              0           0      0       1        0
+ 8 MI State T…              0              0           0      0       1        0
+ 9 Mich. Prop…              0              0           0      0       1        0
+10 Mich. Prop…              0              0           0      0       1        0
+# ℹ 14 more rows
+# ℹ 45 more variables: Bullheads &lt;int&gt;, Burbot &lt;int&gt;, Carp &lt;int&gt;,
+#   `Channel Catfish` &lt;int&gt;, `Channel Catfish and Bullheads` &lt;int&gt;,
+#   `Channel catfish` &lt;int&gt;, Chubs &lt;int&gt;, Cisco &lt;int&gt;, `Cisco and Chubs` &lt;int&gt;,
+#   `Cisco and chubs` &lt;int&gt;, Crappie &lt;int&gt;, Drum &lt;int&gt;,
+#   `Freshwater Drum` &lt;int&gt;, `Gizzard Shad` &lt;int&gt;, Goldfish &lt;int&gt;,
+#   Herring &lt;int&gt;, `Lake Sturgeon` &lt;int&gt;, `Lake Trout` &lt;int&gt;, …</code></pre>
+</div>
+</div>
+<p>The output of the code is a table in which each row represents a region, and each column represents the number of time a particular fish species was found in the region. When a species is not found in a region, the count count for that species is represented as 0. In this scenario the code works with the entire fishing data set, which includes all the data without any splitting. However, both codes test_data and fishing count the number of occurrences of each species in each region.</p>
+</section>
+<section id="visualizing-species-distribution-1" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-species-distribution-1">Visualizing Species Distribution</h3>
+<p>The following code analyzes the entire fishing data set in order to identify the top five species with the highest total counts. It then groups the data by species, sums up the counts for each species, and selects the top five species. In addition to this, it filters the data for the top five species and examines individual regions. Finally, it generates a bar plot of the distribution of these top five species by region where each bar represents the number of species in a specific region.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select top 5 species by total count</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>top_species <span class="ot">&lt;-</span> fishing <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_count =</span> <span class="fu">sum</span>(values, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span>  <span class="co"># Assuming 'values' represents species count</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">5</span>, total_count)  <span class="co"># Selecting the top 5 species</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for only the top species</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> fishing <span class="sc">%&gt;%</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">%in%</span> top_species<span class="sc">$</span>species)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define regions to focus on</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>regions_of_interest <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Michigan (MI)"</span>, <span class="st">"New York (NY)"</span>, <span class="st">"Ohio (OH)"</span>, <span class="st">"Canada (ONT)"</span>, <span class="st">"Wisconsin (WI)"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for only the regions of interest</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>filtered_data <span class="ot">&lt;-</span> filtered_data <span class="sc">%&gt;%</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(region <span class="sc">%in%</span> regions_of_interest)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the bar plot for the top 5 species by region</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> values, <span class="at">fill =</span> region)) <span class="sc">+</span>  <span class="co"># Use 'values' for species count</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Top 5 Species Distribution by Region (Full Dataset)"</span>,</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Fish Species"</span>,</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count of Species"</span>) <span class="sc">+</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 694 rows containing missing values or values outside the scale range
+(`geom_bar()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Great-Lake-Fish-Analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The bar graph illustrates the frequency of the top five species in the areas that were chosen. Ohio (OH) has the most amount of Cisco species, and Canada (ONT) has much more Yellow Perch species than the other regions. The Yellow Perch count in Canada appears to be larger than in the test_data plot. In this plot, the overall pattern remains the same, but the counts are higher. This is because the fishing data contains more data than the test_data.</p>
+</section>
+<section id="variation-of-fish-species-counts-across-regions-of-the-great-lakes-1" class="level3">
+<h3 class="anchored" data-anchor-id="variation-of-fish-species-counts-across-regions-of-the-great-lakes-1">Variation of Fish Species Counts Across Regions of the Great Lakes</h3>
+<p>The following code creates a box-plot to illustrate the distribution of species counts within the top five regions. The species are plotted on the y-axis and species number on the x- axis. Outliers are hidden to focus on the main data distribution, and a minimal theme is applied for a clear visualization of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the box plot for species count distribution in top 5 regions</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_data, <span class="fu">aes</span>(<span class="at">x =</span> values, <span class="at">y =</span> species, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span>  <span class="co"># Use outlier.shape = NA instead of outliers = FALSE</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Species Count Distribution in Top 5 Regions"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species Count"</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Fish Species"</span>) <span class="sc">+</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 694 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Great-Lake-Fish-Analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 

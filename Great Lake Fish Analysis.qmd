@@ -105,8 +105,6 @@ ggplot(filtered_data, aes(x = species, y = values, fill = region)) +  # Use 'val
        y = "Count of Species") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   theme_minimal()
-
-
 ```
 
 The bar graph illustrates the frequency of the top five species in the areas that were chosen. Ohio (OH) has the most amount of Cisco species, and Canada (ONT) has much more Yellow Perch species than the other regions. Other species, such as Lake Trout and Lake Whitefish, are spread out among different regions but in lower overall counts. Species variations reveal differences in distribution by region among fish, with potential explanations that might include environmental circumstances and fishing activity.
@@ -188,6 +186,8 @@ ggplot(filtered_data, aes(x = species, y = values, fill = region)) +  # Use 'val
 The bar graph illustrates the frequency of the top five species in the areas that were chosen. Ohio (OH) has the most amount of Cisco species, and Canada (ONT) has much more Yellow Perch species than the other regions. The Yellow Perch count in Canada appears to be larger than in the test_data plot. In this plot, the overall pattern remains the same, but the counts are higher. This is because the fishing data contains more data than the test_data.
 
 ### Variation of Fish Species Counts Across Regions of the Great Lakes
+
+The following code creates a box-plot to illustrate the distribution of species counts within the top five regions. The species are plotted on the y-axis and species number on the x- axis. Outliers are hidden to focus on the main data distribution, and a minimal theme is applied for a clear visualization of the data.
 
 ```{r}
 # Create the box plot for species count distribution in top 5 regions
