@@ -192,7 +192,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
 ✖ recipes::step()   masks stats::step()
-• Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
+• Search for functions across packages at https://www.tidymodels.org/find/</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>my_data_splits <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(fishing, <span class="at">prop =</span> <span class="fl">0.5</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -208,12 +208,12 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(test_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>spc_tbl_ [32,853 × 7] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ year       : num [1:32853] 1991 1991 1992 1992 1993 ...
+ $ year       : num [1:32853] 1991 1992 1992 1992 1993 ...
  $ lake       : chr [1:32853] "Erie" "Erie" "Erie" "Erie" ...
  $ species    : chr [1:32853] "American Eel" "American Eel" "American Eel" "American Eel" ...
- $ grand_total: num [1:32853] 1 1 0 0 0 0 0 0 0 0 ...
+ $ grand_total: num [1:32853] 1 0 0 0 0 0 0 0 0 0 ...
  $ comments   : chr [1:32853] NA NA NA NA ...
- $ region     : chr [1:32853] "Michigan (MI)" "Pennsylvania (PA)" "Ohio (OH)" "Pennsylvania (PA)" ...
+ $ region     : chr [1:32853] "U.S. Total" "New York (NY)" "Pennsylvania (PA)" "U.S. Total" ...
  $ values     : num [1:32853] 0 0 0 0 0 0 0 0 0 0 ...
  - attr(*, "spec")=
   .. cols(
@@ -241,15 +241,15 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <pre><code># A tibble: 24 × 52
    region      `Amercian Eel` `American Eel` `Blue Pike` Bowfin Buffalo Bullhead
    &lt;chr&gt;                &lt;int&gt;          &lt;int&gt;       &lt;int&gt;  &lt;int&gt;   &lt;int&gt;    &lt;int&gt;
- 1 Canada (ON…             67              2         109     65      20        9
- 2 Georgian B…              0              0           0      0      16        0
- 3 Green Bay …              0              0           0      0       1        0
+ 1 Canada (ON…             72              2          93     57      26        9
+ 2 Georgian B…              0              0           0      0      14        0
+ 3 Green Bay …              0              0           0      0       0        0
  4 Green Bay …              0              0           0      0       1        0
- 5 Huron Prop…              0              0           0      0      18        0
+ 5 Huron Prop…              0              0           0      0      16        0
  6 Illinois (…              0              0           0      0       1        0
  7 Indiana (I…              0              0           0      0       0        0
- 8 MI State T…              0              0           0      0       1        0
- 9 Mich. Prop…              0              0           0      0       0        0
+ 8 MI State T…              0              0           0      0       0        0
+ 9 Mich. Prop…              0              0           0      0       1        0
 10 Mich. Prop…              0              0           0      0       1        0
 # ℹ 14 more rows
 # ℹ 45 more variables: Bullheads &lt;int&gt;, Burbot &lt;int&gt;, Carp &lt;int&gt;,
@@ -292,7 +292,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 342 rows containing missing values or values outside the scale range
+<pre><code>Warning: Removed 337 rows containing missing values or values outside the scale range
 (`geom_bar()`).</code></pre>
 </div>
 <div class="cell-output-display">
@@ -316,7 +316,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Fish Species"</span>) <span class="sc">+</span></span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 342 rows containing non-finite outside the scale range
+<pre><code>Warning: Removed 337 rows containing non-finite outside the scale range
 (`stat_boxplot()`).</code></pre>
 </div>
 <div class="cell-output-display">
@@ -327,7 +327,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 </div>
 </div>
 </div>
-<p>The box-plot displays the counts of abundance of different species in different regions. It represents the range of variability of abundance. Cisco and Yellow Perch present the highest counts, ad Ohio (OH) and Canada (ONT) the highest variability. The wide interquartile range for these species represents large differences in the population of fish between regions. Lake Whitefish and Lake Trout present more even distributions with fewer extreme values. Evidence of the occurrence of outliers indicates that some regions can have extremely high or low abundances of individual species, emphasizing regional effects on fish habitats.</p>
+<p>The box-plot displays the counts of abundance of different species in different regions. It represents the range of variability of abundance. Cisco and Yellow Perch present the highest counts. Ohio (OH) and Canada (ONT) has the highest variability for Yellow Perch while Wisconsin (WI) and Canada (ONT) has the highest variability for Cisco. The wide interquartile range for these species represents large differences in the population of fish between regions. Lake Whitefish and Lake Trout present more even distributions with fewer extreme values. Evidence of the occurrence of outliers indicates that some regions can have extremely high or low abundances of individual species, emphasizing regional effects on fish habitats.</p>
 </section>
 <section id="methodological-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="methodological-analysis">Methodological Analysis</h3>
@@ -443,7 +443,7 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the box plot for species count distribution in top 5 regions</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered_data, <span class="fu">aes</span>(<span class="at">x =</span> values, <span class="at">y =</span> species, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span>  <span class="co"># Use outlier.shape = NA instead of outliers = FALSE</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outliers =</span> <span class="cn">FALSE</span>) <span class="sc">+</span>  <span class="co"># Use outlier.shape = NA instead of outliers = FALSE</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Species Count Distribution in Top 5 Regions"</span>,</span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species Count"</span>,</span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Fish Species"</span>) <span class="sc">+</span></span>
@@ -460,6 +460,12 @@ dbl (14): SID, YEAR, MONTH, DAY, LATITUDE, LONGITUDE, GRID, NO_STOCKED, YEAR...
 </div>
 </div>
 </div>
+<p>The box-plot illustrates the species count distribution across the top five regions. However, it contains a wider range of values compared to the first box-plot. The x-axis extends up to 6,000, pointing that some regions have higher species counts. In this box-plot, the species that contains the highest counts appear to be Cisco and Yellow Perch, as it has the widest box-plot extending toward the higher values on the x-axis. Ohio (OH) and Canada (ONT) has the highest variability for Yellow Perch while Wisconsin (WI) and Canada (ONT) has the highest variability for Cisco.</p>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>The analysis of fish species distributions across different regions of the Great Lakes highlight how species vary by region, supporting the hypothesis that regional environmental conditions impacts the species variability. In both exploratory and methodological analyses Yellow Perch and Cisco were the most abundant species. In both bar plots analyses Cisco was abundant in Ohio (OH), while Yellow Perch was more abundant in Canada (ONT). Furthermore, in both box-plots analyses Ohio (OH) and Canada (ONT) had the highest variability for Yellow Perch while Wisconsin (WI) and Canada (ONT) had the highest variability for Cisco.</p>
+<p>The comparison of exploratory analysis with the methodological analysis confirms consistent distribution patterns while demonstrating higher overall counts when using the complete data.</p>
 </section>
 </section>
 
