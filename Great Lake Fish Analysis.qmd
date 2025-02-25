@@ -201,7 +201,7 @@ ggplot(filtered_data, aes(x = values, y = species, fill = region)) +
 
 The box-plot illustrates the species count distribution across the top five regions. However, it contains a wider range of values compared to the first box-plot. The x-axis extends up to 6,000, pointing that some regions have higher species counts. In this box-plot, the species that contains the highest counts appear to be Cisco and Yellow Perch, as it has the widest box-plot extending toward the higher values on the x-axis. Ohio (OH) and Canada (ONT) has the highest variability for Yellow Perch while Wisconsin (WI) and Canada (ONT) has the highest variability for Cisco.
 
-### Conclusion 
+### Conclusion
 
 The analysis of fish species distributions across different regions of the Great Lakes highlight how species vary by region, supporting the hypothesis that regional environmental conditions impacts the species variability. In both exploratory and methodological analyses Yellow Perch and Cisco were the most abundant species. In both bar plots analyses Cisco was abundant in Ohio (OH), while Yellow Perch was more abundant in Canada (ONT). Furthermore, in both box-plots analyses Ohio (OH) and Canada (ONT) had the highest variability for Yellow Perch while Wisconsin (WI) and Canada (ONT) had the highest variability for Cisco.
 
