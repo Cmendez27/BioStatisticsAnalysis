@@ -11,7 +11,7 @@ execute:
 
 ### Abstract
 
-This analysis examines how fish species distribute across different places using data visualization techniques. The purpose of this analysis is to determine how the different species vary by region and whether particular locations have higher concentration of specific species.
+This analysis examines how fish species distribute across different places using data visualization techniques. The purpose of this analysis is to determine how the different species vary by region and whether particular locations have higher concentration of specific species. Results demonstrated that Cisco was concentrated in Ohio, while Yellow Perch was abundant in Ontario. Ohio and Ontario demonstrated high variability for Yellow Perch, and Wisconsin and Ontario demonstrated high variability for Cisco. Consistent distribution patterns were observed between the exploratory and methodological analyses, with the methodological analysis revealing higher overall counts. These findings support the hypothesis that regional environmental conditions impact fish species distribution.
 
 ### Introduction
 
@@ -125,6 +125,8 @@ ggplot(filtered_data, aes(x = values, y = species, fill = region)) +
 The box-plot displays the counts of abundance of different species in different regions. It represents the range of variability of abundance. Cisco and Yellow Perch present the highest counts. Ohio (OH) and Canada (ONT) has the highest variability for Yellow Perch while Wisconsin (WI) and Canada (ONT) has the highest variability for Cisco. The wide interquartile range for these species represents large differences in the population of fish between regions. Lake Whitefish and Lake Trout present more even distributions with fewer extreme values. Evidence of the occurrence of outliers indicates that some regions can have extremely high or low abundances of individual species, emphasizing regional effects on fish habitats.
 
 ### Methodological Analysis
+
+In the following analysis new data will be used.
 
 ### Load and inspect data
 
