@@ -1,0 +1,38 @@
+---
+title: "Performing Quantitative RNA-seq"
+author: "Cesia Mendez"
+format: html
+editor: visual
+execute:
+  keep-md: true
+---
+
+## Performing Quantitative RNA-seq 
+
+```{r}
+#install.packages("devtools")
+library(devtools)
+```
+
+```{r}
+#devtools::install_github("danmaclean/rbioinfcookbook")
+library(rbioinfcookbook)
+
+```
+
+```{r}
+install.packages("forcats")
+
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("edgeR")
+
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Biobase")
+
+library(forcats)
+library(edgeR)
+```
