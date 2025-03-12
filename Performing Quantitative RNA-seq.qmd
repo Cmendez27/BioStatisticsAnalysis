@@ -7,18 +7,34 @@ execute:
   keep-md: true
 ---
 
-## Performing Quantitative RNA-seq 
+## Performing Quantitative RNA-seq
+
+The following project is an introduction to RNA sequencing, which is a powerful tool used by scientists to study gene activity in organisms. RNA sequencing helps to identify which genes are activated in different conditions in order to provide valuable insights in different biological processes.
+
+In this first part, an R and edgeR package will be used to analyze RNA sequencing data. A Drosophila melanogaster dataset sample will be loaded to compare the gene expression between two stages of larvae, and identify which genes are significantly different between them.
+
+## Installing and Loading the devtools package 
+
+The following code installs the devtools package and loads it into the R session. The devtools package will provide tools for package development and will allow to install packages directly from GitHub
 
 ```{r}
 #install.packages("devtools")
 library(devtools)
 ```
 
+## Installing and Loading the rbioinfcookbook package from GitHub
+
+The following code installs the rbioinfcookbook package from GitHub, allowing to install R packages directly from repositories.
+
 ```{r}
 #devtools::install_github("danmaclean/rbioinfcookbook")
 library(rbioinfcookbook)
 
 ```
+
+## Installing and Loading forcats, edgeR, and Biobase Packages
+
+The following code will install and load essential R packages for data manipulation and bioinformatics analysis. The forcats package is installed using the function install.packages(), while the edgeR and Biobase packages, which are from the Bioconductor repository, are installed using the function BiocManager::install(). Finally, the function library() will load the forcats and edgeR packages into the R session to be used.
 
 ```{r}
 install.packages("forcats")
@@ -35,4 +51,28 @@ BiocManager::install("Biobase")
 
 library(forcats)
 library(edgeR)
+
+```
+
+## Loading the Biobase Package 
+
+The following code will load the Biobase package, which is a package that provides tools for organizing and analyzing biological data, especially for genomics research.
+
+```{r}
+library(Biobase)
+```
+
+## Estimating Gene Expression Differences with edgeR 
+
+In the following section, the edgeR package will be used to analyze and identify which genes are more or less active in different conditions between samples. To practice, a sample data set from Drosophila melanogaster will be used, which has data from 147 samples and 15,000 genes. To estimate the differential expression the Trimmed Mean of M-values method will be used to ensure that differences in the size of the sample do not affect the results. Then, the Generalized Linear Model method will be used to compare the gene expression levels between different group samples. These methods will help to determine which genes demonstrate significant changes in activity under different conditions.
+
+## Converting a Gene Count DataFrame into a Matrix 
+
+The function count_dataframe will extract the gene column from a DataFrame and store it in a separate variable called genes. On the other hand, the function count_matrix will remove the gene column from the original DataFrame and convert the remaining data into a matrix .
+
+```{r}
+genes <- count_dataframe[['gene']]
+count_dataframe[['gene']] <- NULL
+count_matrix <- as.matrix(count_dataframe)
+rownames(count_matrix) <- genes
 ```
