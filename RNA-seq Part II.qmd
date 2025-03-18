@@ -1,0 +1,10 @@
+---
+title: "RNA-seq Part II"
+author: "Cesia Mendez"
+format: html
+editor: visual
+execute:
+  keep-md: true
+---
+
+# **Performing Quantitative RNA-seq, Part II**
