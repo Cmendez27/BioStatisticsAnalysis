@@ -9,7 +9,7 @@ execute:
 
 # **Performing Quantitative RNA-seq, Part II**
 
-In the following project, RNA- sequence data from Arabidopsis thaliana will be analyzed and visualized using heat maps to identify patterns in gene expression across different ecotypes and plant parts. The ComplexHeatmap package in R will be used to generate a heatmap, with color palettes to enhance visual interpretation. The heatmap will help reveal trends in gene expression, highlighting which genes are more active in specific conditions.
+In the following project, RNA- sequence data from Arabidopsis thaliana will be analyzed and visualized using heat maps to identify patterns in gene expression across different ecotypes and plant parts. The ComplexHeatmap package in R will be used to generate a heat map, with color palettes to enhance visual interpretation. The heat map will help reveal trends in gene expression, highlighting which genes are more active in specific conditions.
 
 ### Installing the ComplexHeatmap Package for RNA-seq Visualization
 
