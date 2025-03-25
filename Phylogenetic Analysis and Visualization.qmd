@@ -1,0 +1,138 @@
+---
+title: "Phylogenetic Analysis and Visualization"
+author: "Cesia Mendez"
+format: html
+editor: visual
+execute:
+  keep-md: true
+---
+
+```{r}
+#install.packages("ape")
+
+#if (!require("BiocManager", quietly = TRUE))
+    #install.packages("BiocManager")
+
+#BiocManager::install("treeio")
+
+#if (!require("BiocManager", quietly = TRUE))
+    #install.packages("BiocManager")
+
+#BiocManager::install("ggtree")
+
+#if (!require("BiocManager", quietly = TRUE))
+    #install.packages("BiocManager")
+
+#BiocManager::install("SGSeq")
+```
+
+```{r}
+library(rbioinfcookbook)
+library(SGSeq)
+library(ape)
+library(treeio)
+library(ggplot2)
+library(ggtree)
+```
+
+```{r}
+newick_file_path <- fs::path_package("extdata", "mammal_tree.nwk", package = "rbioinfcookbook" )
+
+nexus_file_path <- fs::path_package("extdata", "mammal_tree.nexus", package = "rbioinfcookbook")
+
+newick <- ape::read.tree(newick_file_path)
+nexus <- ape::read.nexus(nexus_file_path)
+```
+
+```{r}
+beast_file_path <- fs::path_package("extdata", "beast_mcc.tree", package = "rbioinfcookbook")
+
+raxml_file_path <- fs::path_package("extdata", "RAxML_bipartitionsBranchLabels.H3", package = "rbioinfcookbook")
+
+beast <- read.beast(beast_file_path)
+raxml <- read.raxml(raxml_file_path)
+```
+
+```{r}
+class(newick)
+
+```
+
+```{r}
+class(nexus)
+```
+
+```{r}
+class(beast)
+```
+
+```{r}
+class(raxml)
+```
+
+```{r}
+beast_phylo <- treeio::as.phylo(beast)
+newick_tidytree <- treeio::as.treedata(newick)
+```
+
+```{r}
+treeio::write.beast(newick_tidytree, file = "mammal_tree.beast")
+ape::write.nexus(beast_phylo, file = "beast_mcc.nexus")
+```
+
+```{r}
+tree_file <- fs::path_package("extdata", "itol.nwk", package = "rbioinfcookbook")
+
+itol<- ape::read.tree(tree_file)
+```
+
+```{r}
+ggtree(itol)
+```
+
+```{r}
+ggtree(itol) +
+  geom_tiplab(color = "blue", size = 1)
+```
+
+```{r}
+ggtree(itol, layout = "circular") +
+  geom_tiplab(color = "blue", size = 2)
+```
+
+```{r}
+ggtree(itol, layout = "circular") +
+  geom_tiplab(color = "blue", size = 2) +
+  geom_strip(13, 14, color = "red", barsize = 1)
+```
+
+```{r}
+ggtree(itol) +
+  coord_flip() +
+  scale_x_reverse()
+```
+
+```{r}
+ggtree(itol, layout = "unrooted")
+```
+
+```{r}
+mammal_file <- fs::path_package("extdata", "mammal_tree.nwk", package = "rbioinfcookbook" )
+
+mammal<- ape::read.tree(mammal_file)
+```
+
+```{r}
+ggtree(mammal) +
+  geom_tiplab(color = "blue", size = 2)
+
+```
+
+```{r}
+ggtree(mammal, layout = "circular") +
+  geom_tiplab(color = "blue", size = 2)
+```
+
+```{r}
+
+```
